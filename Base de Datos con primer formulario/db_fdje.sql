@@ -3,10 +3,6 @@
 -- Model: New Model    Version: 1.0
 -- MySQL Workbench Forward Engineering
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
@@ -67,7 +63,6 @@ CREATE TABLE IF NOT EXISTS `db_fdje`.`ciudades` (
   `created_at` TIMESTAMP NULL DEFAULT NULL,
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `ciudades_id_provincia_foreign` (`id_provincia` ASC) VISIBLE,
   CONSTRAINT `ciudades_id_provincia_foreign`
     FOREIGN KEY (`id_provincia`)
     REFERENCES `db_fdje`.`provincias` (`id`)
@@ -249,15 +244,6 @@ CREATE TABLE IF NOT EXISTS `db_fdje`.`pacientes` (
   `created_at` TIMESTAMP NULL DEFAULT NULL,
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `pacientes_cedula_unique` (`cedula` ASC) VISIBLE,
-  UNIQUE INDEX `pacientes_email_unique` (`email` ASC) VISIBLE,
-  INDEX `pacientes_id_ciudad_foreign` (`id_ciudad` ASC) VISIBLE,
-  INDEX `pacientes_id_diabetes_foreign` (`id_diabetes` ASC) VISIBLE,
-  INDEX `pacientes_id_insulina_basals_foreign` (`id_insulina_basals` ASC) VISIBLE,
-  INDEX `pacientes_id_insulina_prandials_foreign` (`id_insulina_prandials` ASC) VISIBLE,
-  INDEX `pacientes_id_tipo_hospitales_foreign` (`id_tipo_hospitales` ASC) VISIBLE,
-  INDEX `pacientes_id_ayudas_fundacions_foreign` (`id_ayudas_fundacions` ASC) VISIBLE,
-  INDEX `pacientes_id_problema_diabetes_foreign` (`id_problema_diabetes` ASC) VISIBLE,
   CONSTRAINT `pacientes_id_ayudas_fundacions_foreign`
     FOREIGN KEY (`id_ayudas_fundacions`)
     REFERENCES `db_fdje`.`ayudas_fundacions` (`id`)
@@ -306,8 +292,8 @@ DROP TABLE IF EXISTS `db_fdje`.`password_resets` ;
 CREATE TABLE IF NOT EXISTS `db_fdje`.`password_resets` (
   `email` VARCHAR(255) NOT NULL,
   `token` VARCHAR(255) NOT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT NULL,
-  INDEX `password_resets_email_index` (`email` ASC) VISIBLE)
+  `created_at` TIMESTAMP NULL DEFAULT NULL
+  )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
@@ -327,13 +313,7 @@ CREATE TABLE IF NOT EXISTS `db_fdje`.`users` (
   `remember_token` VARCHAR(100) NULL DEFAULT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `users_email_unique` (`email` ASC) VISIBLE)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
