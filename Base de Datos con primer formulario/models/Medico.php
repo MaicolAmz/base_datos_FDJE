@@ -4,13 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Diabetes extends Model
+class Medico extends Model
 {
+    //protected $table = 'ciudades';
     protected $fillable = [
-        'tipo_diabetes',
+        'nombres'
     ];
 
-    //Relación 1 - N
+    //Relacion 1 - N
     public function paciente()
     {
         return $this->hasMany('App\Paciente');

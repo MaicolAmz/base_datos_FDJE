@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +13,6 @@ class InsulinaBasal extends Model
     //Relación 1 - N
     public function paciente_insulina_basal()
     {
-        return $this->belongsToMany('App\Models\Paciente');
+        return $this->belongsToMany('App\Paciente');
     }
 }

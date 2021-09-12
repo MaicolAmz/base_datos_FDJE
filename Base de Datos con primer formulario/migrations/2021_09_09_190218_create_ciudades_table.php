@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInsulinasPrandialTable extends Migration
+class CreateCiudadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class CreateInsulinasPrandialTable extends Migration
      */
     public function up()
     {
-        Schema::create('insulina_prandials', function (Blueprint $table) {
+        Schema::create('ciudads', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 30);
+            $table->string('nombre_ciudad', 80);
+            $table->unsignedBigInteger('id_provincia');
+            $table->foreign('id_provincia')
+                ->references('id')->on('provincias')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +32,6 @@ class CreateInsulinasPrandialTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('insulina_prandials');
+        Schema::dropIfExists('ciudads');
     }
 }

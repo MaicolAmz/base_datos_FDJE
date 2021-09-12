@@ -52,18 +52,18 @@ COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `db_fdje`.`ciudades`
+-- Table `db_fdje`.`ciudads`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_fdje`.`ciudades` ;
+DROP TABLE IF EXISTS `db_fdje`.`ciudads` ;
 
-CREATE TABLE IF NOT EXISTS `db_fdje`.`ciudades` (
+CREATE TABLE IF NOT EXISTS `db_fdje`.`ciudads` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(60) NOT NULL,
   `id_provincia` BIGINT(20) UNSIGNED NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `ciudades_id_provincia_foreign`
+  CONSTRAINT `ciudads_id_provincia_foreign`
     FOREIGN KEY (`id_provincia`)
     REFERENCES `db_fdje`.`provincias` (`id`)
     ON DELETE CASCADE
@@ -128,11 +128,11 @@ COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `db_fdje`.`insulinas_basal`
+-- Table `db_fdje`.`insulina_basals`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_fdje`.`insulinas_basal` ;
+DROP TABLE IF EXISTS `db_fdje`.`insulina_basals` ;
 
-CREATE TABLE IF NOT EXISTS `db_fdje`.`insulinas_basal` (
+CREATE TABLE IF NOT EXISTS `db_fdje`.`insulina_basals` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(30) NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
@@ -140,6 +140,23 @@ CREATE TABLE IF NOT EXISTS `db_fdje`.`insulinas_basal` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
+
+
+-- -----------------------------------------------------
+-- Table `db_fdje`.`medicos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `db_fdje`.`medicos` ;
+
+CREATE TABLE IF NOT EXISTS `db_fdje`.`medicos` (
+  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombres` VARCHAR(75) NULL DEFAULT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT NULL,
+  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 19
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
 
@@ -161,30 +178,13 @@ COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `db_fdje`.`problema_diabetes`
+-- Table `db_fdje`.`tipo_hospitals`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_fdje`.`problema_diabetes` ;
+DROP TABLE IF EXISTS `db_fdje`.`tipo_hospitals` ;
 
-CREATE TABLE IF NOT EXISTS `db_fdje`.`problema_diabetes` (
+CREATE TABLE IF NOT EXISTS `db_fdje`.`tipo_hospitals` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `problema` VARCHAR(200) NOT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT NULL,
-  `updated_at` TIMESTAMP NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 7
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_unicode_ci;
-
-
--- -----------------------------------------------------
--- Table `db_fdje`.`tipo_hospitales`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_fdje`.`tipo_hospitales` ;
-
-CREATE TABLE IF NOT EXISTS `db_fdje`.`tipo_hospitales` (
-  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `tipo_hospitales` VARCHAR(200) NOT NULL,
+  `tipo_hospitals` VARCHAR(200) NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
@@ -240,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `db_fdje`.`domicilios` (
   PRIMARY KEY (`id`),
   CONSTRAINT `domicilios_id_ciudad_foreign`
     FOREIGN KEY (`id_ciudad`)
-    REFERENCES `db_fdje`.`ciudades` (`id`)
+    REFERENCES `db_fdje`.`ciudads` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -373,6 +373,7 @@ CREATE TABLE IF NOT EXISTS `db_fdje`.`beneficiarios` (
   `celular` VARCHAR(15) NOT NULL,
   `telefono_convencional` VARCHAR(15) NOT NULL,
   `valor_hemoglobina` INT(11) NOT NULL,
+  `fecha_ultimo_examen_hemoglobina` DATE NULL DEFAULT NULL,
   `veces_mide_glucosa` INT(11) NOT NULL,
   `tiene_registro_glucosa` VARCHAR(50) NOT NULL,
   `puede_medir_glucosa` VARCHAR(50) NOT NULL,
@@ -410,9 +411,9 @@ CREATE TABLE IF NOT EXISTS `db_fdje`.`beneficiarios` (
   `id_diabetes` BIGINT(20) UNSIGNED NOT NULL,
   `id_insulina_basals` BIGINT(20) UNSIGNED NOT NULL,
   `id_insulina_prandials` BIGINT(20) UNSIGNED NOT NULL,
-  `id_tipo_hospitales` BIGINT(20) UNSIGNED NOT NULL,
+  `id_medico` BIGINT(20) UNSIGNED NOT NULL,
+  `id_tipo_hospitals` BIGINT(20) UNSIGNED NOT NULL,
   `id_ayudas_fundacions` BIGINT(20) UNSIGNED NOT NULL,
-  `id_problema_diabetes` BIGINT(20) UNSIGNED NOT NULL,
   `id_educacion` BIGINT(20) UNSIGNED NULL DEFAULT NULL,
   `id_domicilio` BIGINT(20) UNSIGNED NULL DEFAULT NULL,
   `id_info_diabetes` BIGINT(20) UNSIGNED NULL DEFAULT NULL,
@@ -428,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `db_fdje`.`beneficiarios` (
     ON UPDATE CASCADE,
   CONSTRAINT `beneficiarios_id_ciudad_foreign`
     FOREIGN KEY (`id_ciudad`)
-    REFERENCES `db_fdje`.`ciudades` (`id`)
+    REFERENCES `db_fdje`.`ciudads` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `beneficiarios_id_diabetes_foreign`
@@ -438,7 +439,7 @@ CREATE TABLE IF NOT EXISTS `db_fdje`.`beneficiarios` (
     ON UPDATE CASCADE,
   CONSTRAINT `beneficiarios_id_insulina_basals_foreign`
     FOREIGN KEY (`id_insulina_basals`)
-    REFERENCES `db_fdje`.`insulinas_basal` (`id`)
+    REFERENCES `db_fdje`.`insulina_basals` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `beneficiarios_id_insulina_prandials_foreign`
@@ -446,14 +447,14 @@ CREATE TABLE IF NOT EXISTS `db_fdje`.`beneficiarios` (
     REFERENCES `db_fdje`.`insulina_prandials` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `beneficiarios_id_problema_diabetes_foreign`
-    FOREIGN KEY (`id_problema_diabetes`)
-    REFERENCES `db_fdje`.`problema_diabetes` (`id`)
+  CONSTRAINT `beneficiarios_id_medico_foreign`
+    FOREIGN KEY (`id_medico`)
+    REFERENCES `db_fdje`.`medicos` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `beneficiarios_id_tipo_hospitales_foreign`
-    FOREIGN KEY (`id_tipo_hospitales`)
-    REFERENCES `db_fdje`.`tipo_hospitales` (`id`)
+  CONSTRAINT `beneficiarios_id_tipo_hospitals_foreign`
+    FOREIGN KEY (`id_tipo_hospitals`)
+    REFERENCES `db_fdje`.`tipo_hospitals` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `beneficiarios_id_educacions_foreign`

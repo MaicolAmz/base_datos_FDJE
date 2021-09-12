@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class InsulinaPrandial extends Model
+class TipoHospital extends Model
 {
     protected $fillable = [
-        'nombre'
+        'tipo_hospital',
     ];
 
     //Relación 1 - N
     public function paciente()
     {
-        return $this->belongsToMany('App\Models\Paciente');
+        return $this->hasMany('App\Paciente');
     }
 }

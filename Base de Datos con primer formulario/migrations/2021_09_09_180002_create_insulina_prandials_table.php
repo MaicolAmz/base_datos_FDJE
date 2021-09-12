@@ -3,9 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
-class CreateAyudasFundacionsTable extends Migration
+class CreateInsulinaPrandialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +13,9 @@ class CreateAyudasFundacionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ayudas_fundacions', function (Blueprint $table) {
+        Schema::create('insulina_prandials', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo_ayuda');
+            $table->string('nombre', 30);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateAyudasFundacionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ayudas_fundacions');
+        Schema::dropIfExists('insulina_prandials');
     }
 }

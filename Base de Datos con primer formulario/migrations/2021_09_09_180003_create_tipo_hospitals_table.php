@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCiudadesTable extends Migration
+class CreateTipoHospitalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateCiudadesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ciudades', function (Blueprint $table) {
+        Schema::create('tipo_hospitals', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 60);
-            $table->unsignedBigInteger('id_provincia');
-            $table->foreign('id_provincia')
-                ->references('id')->on('provincias')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->string('tipo_hospital', 200);
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateCiudadesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ciudades');
+        Schema::dropIfExists('tipo_hospitals');
     }
 }

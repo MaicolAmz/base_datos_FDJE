@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ayudas_Fundacion extends Model
+class AyudaFundacion extends Model
 {
     protected $fillable = [
         'tipo_ayuda'
@@ -13,6 +13,6 @@ class Ayudas_Fundacion extends Model
     //Relación N - N
     public function paciente()
     {
-        return $this->belongsToMany('App/Models/Paciente');
+        return $this->belongsToMany('App/Paciente');
     }
 }

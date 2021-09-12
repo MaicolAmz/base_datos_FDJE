@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoHospitalesTable extends Migration
+class CreateAyudaFundacionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTipoHospitalesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_hospitales', function (Blueprint $table) {
+        Schema::create('ayuda_fundacions', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo_hospitales', 200);
+            $table->string('tipo_ayuda', 120);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateTipoHospitalesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_hospitales');
+        Schema::dropIfExists('ayuda_fundacions');
     }
 }
